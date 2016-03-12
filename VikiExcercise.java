@@ -15,12 +15,17 @@ public class VikiExcercise {
 		int trueCount = 0;
 		int falseCount = 0;
 		boolean isMore = true;
+		HttpClient httpClient;
+		
 		do {
 			pageCount++;
-			HttpGet httpget = new HttpGet(baseUrl+pageCount);
-
-			HttpClient httpClient = HttpClientBuilder.create().build();
+			String url = baseUrl + pageCount;
+			System.out.println("processing url :" + url);
+			HttpGet httpget = new HttpGet(url);
+		
+			httpClient = HttpClientBuilder.create().build();
 			HttpResponse httpResponse = httpClient.execute(httpget);
+			System.out.println("httpResponse  :" + httpResponse);
 	
 			String jsonResponse = IOUtils.toString(httpResponse.getEntity().getContent());
 			
@@ -35,7 +40,8 @@ public class VikiExcercise {
 					trueCount++;
 				else
 					falseCount++;
-			}		
+			}	
+			System.out.println("done processing url : " + url);
 
 		} while (isMore);
 		
